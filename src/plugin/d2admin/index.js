@@ -15,7 +15,6 @@ import pluginApi from '@/plugin/api'
 import pluginError from '@/plugin/error'
 import pluginLog from '@/plugin/log'
 import pluginOpen from '@/plugin/open'
-import pluginUtils from '@/plugin/utils'
 import pluginLoading from '@/plugin/loading'
 import apis from '@/apis'
 function getBaseUrl () {
@@ -44,7 +43,6 @@ export default {
     Vue.use(pluginError)
     Vue.use(pluginLog)
     Vue.use(pluginOpen)
-    Vue.use(pluginUtils)
     Vue.use(pluginLoading)
   }
 }

@@ -19,9 +19,9 @@ export default {
     } = {}) {
       // const res = await api.SYS_USER_LOGIN({ username, password })
       const res = {
-        uuid: '',
-        token: '',
-        name: ''
+        uuid: '1',
+        token: '2',
+        name: '3'
       }
       // 设置 cookie 一定要存 uuid 和 token 两个 cookie
       // 整个系统依赖这两个数据进行校验和存储

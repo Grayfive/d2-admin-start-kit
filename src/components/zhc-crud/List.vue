@@ -116,14 +116,15 @@
 <style>
 </style>
 <script>
+import util from '@/libs/util.js'
 import * as config from './config'
 import paginationComponents from './Pagination'
 export default {
   name: 'List',
   data () {
     return {
-      conf: this.$utils.copy(config.listConfigBase),
-      pageSource: this.$utils.copy(config.pageSourceConfigBase),
+      conf: util.other.copy(config.listConfigBase),
+      pageSource: util.other.copy(config.pageSourceConfigBase),
       queryParams: {}, // 其他的查询条件
       tempOperationNum: -1, // 当前点击的是那个列表的操作
       page: 1,
@@ -235,7 +236,7 @@ export default {
         params.lastId = opt.lastId
       }
       console.log(params)
-      const args = this.$utils.copy(this.conf.pageSourceFuncArgs)
+      const args = util.other.copy(this.conf.pageSourceFuncArgs)
       if (args.params) {
         for (const k in params) {
           if (k === 'where') {
@@ -244,14 +245,14 @@ export default {
               if (typeof args.params[k] === 'string') {
                 ap = JSON.parse(args.params[k])
               } else {
-                ap = this.$utils.copy(args.params[k])
+                ap = util.other.copy(args.params[k])
               }
             }
             let p = {}
             if (typeof params[k] === 'string') {
               p = JSON.parse(params[k])
             } else {
-              p = this.$utils.copy(params[k])
+              p = util.other.copy(params[k])
             }
             for (const wk in p) {
               ap[wk] = p[wk]

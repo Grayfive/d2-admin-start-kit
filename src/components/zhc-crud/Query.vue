@@ -184,8 +184,13 @@
 }
 </style>
 <script>
-import moment from 'moment'
+import util from '@/libs/util.js'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 import * as config from './config'
+dayjs.extend(utc)
+dayjs.extend(timezone)
 export default {
   name: 'Query',
   data () {
@@ -282,8 +287,8 @@ export default {
             const opt = this.getOpt(item.opt)
             let _v = item.value
             if (item.type === 'date') {
-              if (moment(item.value).isValid) {
-                _v = moment(item.value).utcOffset('+08:00').unix() ? (moment(item.value).utcOffset('+08:00').unix() * 1000).toString() : ''
+              if (dayjs(item.value).isValid) {
+                _v = dayjs(item.value).tz('Asia/Shanghai').valueOf() ? (dayjs(item.value).tz('Asia/Shanghai').valueOf()).toString() : ''
               } else {
                 _v = ''
               }
@@ -309,8 +314,8 @@ export default {
             const opt = this.getOpt(item.opt)
             let _v = item.value
             if (item.type === 'date') {
-              if (moment(item.value).isValid) {
-                _v = moment(item.value).utcOffset('+08:00').unix() ? (moment(item.value).utcOffset('+08:00').unix() * 1000).toString() : ''
+              if (dayjs(item.value).isValid) {
+                _v = dayjs(item.value).tz('Asia/Shanghai').valueOf() ? (dayjs(item.value).tz('Asia/Shanghai').valueOf()).toString() : ''
               } else {
                 _v = ''
               }
@@ -325,7 +330,7 @@ export default {
         }
       })
       //
-      if (this.$utils.objectCount(_query) > 0) {
+      if (util.other.objectCount(_query) > 0) {
         this.$router.push({ query: _query })
       }
       return _params
@@ -340,8 +345,8 @@ export default {
             const opt = this.getOpt(item.opt)
             let _v = item.value
             if (item.type === 'date') {
-              if (moment(item.value).isValid) {
-                _v = moment(item.value).unix() * 1000
+              if (dayjs(item.value).isValid) {
+                _v = dayjs(item.value).valueOf()
               } else {
                 _v = ''
               }
@@ -361,7 +366,7 @@ export default {
         _params.page = this.$route.query.page
       }
       //
-      if (this.$utils.objectCount(_query) > 0) {
+      if (util.other.objectCount(_query) > 0) {
         this.$router.push({ query: _query })
       }
       return _params

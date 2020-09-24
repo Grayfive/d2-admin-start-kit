@@ -116,20 +116,15 @@ function getPrice (val, w) {
     return s.toFixed(2)
   }
 }
-function install (Vue) {
-  const $utils = {
-    copy,
-    copyTo,
-    isExternal,
-    trim,
-    isNull,
-    objectCount,
-    dataURLtoBlob,
-    blobToFile,
-    getPrice,
-    isNullAndNum
-  }
-  Vue.prototype.$utils = $utils
-  console.log('安装utils插件成功')
+export default {
+  copy,
+  copyTo,
+  isExternal,
+  trim,
+  isNull,
+  objectCount,
+  dataURLtoBlob,
+  blobToFile,
+  getPrice,
+  isNullAndNum
 }
-export default install

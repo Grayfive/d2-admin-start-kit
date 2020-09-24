@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Loading, Notification } from 'element-ui'
-
+import store from '@/store'
+import util from '@/libs/util.js'
 function install (Vue, globalOptions) {
 // 全局 loading 服务
   let loading
@@ -9,18 +10,18 @@ function install (Vue, globalOptions) {
   // 在发送请求之前做些什么
   // 在这里控制请求头
   // config.headers['token'] = '843260562ebf4c6fa6cd4e9aaca10633'
-    if (!Vue.$utils.isNull(Vue.store.state.user.token) && Vue.$utils.isNull(config.headers.Authorization)) {
-      console.debug(Vue.store.state.user.token)
-      config.headers.Authorization = `Bearer ${Vue.store.state.user.token}`
+    if (!util.other.isNull(util.cookies.get('token')) && util.other.isNull(config.headers.Authorization)) {
+      console.info(util.cookies.get('token'))
+      config.headers.Authorization = `Bearer ${util.cookies.get('token')}`
     }
     // console.debug(config)
-    if (Vue.store.state.app.havLoading) {
+    if (store.state['d2admin/ajaxloading/havLoading']) {
       loading = Loading.service({
         lock: true,
         background: 'rgb(0,0,0,0.7)'
       })
     }
-    Vue.store.dispatch('setHavLoading', true)
+    store.dispatch('d2admin/ajaxloading/setHavLoading', true)
     return config
   }, (error) => {
   // 对请求错误做些什么
@@ -64,8 +65,7 @@ function install (Vue, globalOptions) {
         })
       }
       if (response.status === 403 || response.status === 401) {
-        Vue.$router.replace({ name: 'login' })
-        Vue.store.dispatch('logout')
+        store.dispatch('d2admin/account/logout')
       }
     }
     return Promise.reject(error)
