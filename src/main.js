@@ -4,6 +4,8 @@ import i18n from './i18n'
 import App from './App'
 // 核心插件
 import d2Admin from '@/plugin/d2admin'
+// zhc 核心插件
+import crud from '@/components/zhc-crud'
 // store
 import store from '@/store/index'
 
@@ -14,7 +16,8 @@ import { frameInRoutes } from '@/router/routes'
 
 // 核心插件
 Vue.use(d2Admin)
-
+// zhc 核心插件
+Vue.use(crud)
 new Vue({
   router,
   store,
