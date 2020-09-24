@@ -15,7 +15,11 @@ import pluginApi from '@/plugin/api'
 import pluginError from '@/plugin/error'
 import pluginLog from '@/plugin/log'
 import pluginOpen from '@/plugin/open'
-
+import apis from '@/apis'
+function getBaseUrl () {
+  const url = process.env.VUE_APP_BASE_URL
+  return window.location.protocol + '//' + url
+}
 export default {
   async install (Vue, options) {
     // 设置为 false 以阻止 vue 在启动时生成生产提示
@@ -34,7 +38,7 @@ export default {
       i18n: (key, value) => i18n.t(key, value)
     })
     // 插件
-    Vue.use(pluginApi)
+    Vue.use(pluginApi, { base: getBaseUrl(), apis: apis, isTest: false })
     Vue.use(pluginError)
     Vue.use(pluginLog)
     Vue.use(pluginOpen)
