@@ -1,5 +1,6 @@
 
-const app = {
+export default {
+  namespaced: true,
   state: {
     havLoading: true
   },
@@ -14,5 +15,3 @@ const app = {
     }
   }
 }
-
-export default app

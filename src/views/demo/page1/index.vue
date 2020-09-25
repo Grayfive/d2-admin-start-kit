@@ -1,7 +1,8 @@
 <template>
   <d2-container>
-    <query :config="queryConfig"
-           ref="query" />
+    <template slot="header">Page 1 header</template>
+    <query2 :config="queryConfig"
+            ref="query" />
     <list :config="listConfig"
           ref="list" />
   </d2-container>

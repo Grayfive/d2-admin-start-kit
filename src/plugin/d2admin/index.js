@@ -39,7 +39,7 @@ export default {
       i18n: (key, value) => i18n.t(key, value)
     })
     // 插件
-    Vue.use(pluginApi, { base: getBaseUrl(), apis: apis, isTest: false })
+    Vue.use(pluginApi, { base: getBaseUrl(), apis: apis, isTest: true })
     Vue.use(pluginError)
     Vue.use(pluginLog)
     Vue.use(pluginOpen)

@@ -1,8 +1,6 @@
 import { Message, MessageBox } from 'element-ui'
 import util from '@/libs/util.js'
 import router from '@/router'
-// import api from '@/api'
-
 export default {
   namespaced: true,
   actions: {
@@ -36,7 +34,7 @@ export default {
           util.cookies.set('token', res.token)
           await dispatch('d2admin/user/set', {
             name: res.name,
-            hasBuild: false
+            resources: res.resources
           }, { root: true })
         } catch (e) {
           console.log(e)

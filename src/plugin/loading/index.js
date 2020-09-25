@@ -15,13 +15,13 @@ function install (Vue, globalOptions) {
       config.headers.Authorization = `Bearer ${util.cookies.get('token')}`
     }
     // console.debug(config)
-    if (store.state['d2admin/ajaxloading/havLoading']) {
+    if (store.state.zhc.ajaxloading.havLoading) {
       loading = Loading.service({
         lock: true,
         background: 'rgb(0,0,0,0.7)'
       })
     }
-    store.dispatch('d2admin/ajaxloading/setHavLoading', true)
+    store.dispatch('zhc/ajaxloading/setHavLoading', true)
     return config
   }, (error) => {
   // 对请求错误做些什么

@@ -1,121 +1,41 @@
 <template>
-  <div class="text-center">
-    <ul class="pagination">
-      <li class="disabled"><a href="javascript:;">共计 {{pageSource.totalElements}} 条</a></li>
-      <li :class="{ 'disabled' : pageSource.first }">
-        <a href="javascript:;"
-           @click="prevPage">«</a>
-      </li>
-      <li v-for="index in pageList"
-          v-bind:key="index"
-          :class="{ 'active' : index != '...' && (parseInt(index) - 1) === pageSource.number }">
-        <a href="javascript:;"
-           v-if="index === '...'">{{index}}</a>
-        <a href="javascript:;"
-           v-else
-           :class="{ 'disabled' : (parseInt(index) - 1) === pageSource.number }"
-           @click="changeCurrentPage(index)">{{index}}</a>
-      </li>
-      <li :class="{ 'disabled' : pageSource.last }">
-        <a href="javascript:;"
-           @click="nextPage">»</a>
-      </li>
-      <li>
-        <a>
-          前往
-          <input type="text"
-                 v-model.number="pageNumber"
-                 @input="change"
-                 @change="change"
-                 @keyup.enter="goto" />
-          页
-        </a>
-      </li>
-    </ul>
+  <div class="mainsrp-pager">
+    <div class="m-pager">
+      <ul class="pagination">
+        <li class="disabled"><a href="javascript:;">共计 {{pageSource.totalElements}} 条</a></li>
+        <li :class="{ 'disabled' : pageSource.first }">
+          <a href="javascript:;"
+             @click="prevPage">«</a>
+        </li>
+        <li v-for="index in pageList"
+            v-bind:key="index"
+            :class="{ 'active' : index != '...' && (parseInt(index) - 1) === pageSource.number }">
+          <a href="javascript:;"
+             v-if="index === '...'">{{index}}</a>
+          <a href="javascript:;"
+             v-else
+             :class="{ 'disabled' : (parseInt(index) - 1) === pageSource.number }"
+             @click="changeCurrentPage(index)">{{index}}</a>
+        </li>
+        <li :class="{ 'disabled' : pageSource.last }">
+          <a href="javascript:;"
+             @click="nextPage">»</a>
+        </li>
+        <li>
+          <a>
+            前往
+            <input type="text"
+                   v-model.number="pageNumber"
+                   @input="change"
+                   @change="change"
+                   @keyup.enter="goto" />
+            页
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
-<style scoped>
-.text-center {
-  text-align: center;
-}
-
-.pagination {
-  display: inline-block;
-  padding-left: 0;
-  margin: 20px 0;
-  border-radius: 4px;
-}
-
-.pagination > li {
-  display: inline;
-}
-
-.pagination > li > a > input {
-  border: 0;
-  width: 32px;
-  padding: 0;
-  line-height: 16px;
-  height: 16px;
-  background: #f5f5f5;
-  border-radius: 3px;
-  text-align: center;
-}
-
-.pagination > li > a,
-.pagination > li > span {
-  position: relative;
-  float: left;
-  padding: 6px 12px;
-  margin-left: -1px;
-  line-height: 1.428571429;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #ddd;
-}
-
-.pagination > li:first-child > a,
-.pagination > li:first-child > span {
-  margin-left: 0;
-  border-bottom-left-radius: 4px;
-  border-top-left-radius: 4px;
-}
-
-.pagination > li:last-child > a,
-.pagination > li:last-child > span {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-.pagination > li > a:hover,
-.pagination > li > span:hover,
-.pagination > li > a:focus,
-.pagination > li > span:focus {
-  background-color: #eee;
-}
-
-.pagination > .active > a,
-.pagination > .active > span,
-.pagination > .active > a:hover,
-.pagination > .active > span:hover,
-.pagination > .active > a:focus,
-.pagination > .active > span:focus {
-  z-index: 2;
-  color: #fff;
-  cursor: default;
-  background-color: #428bca;
-  border-color: #428bca;
-}
-
-.pagination > .disabled > span,
-.pagination > .disabled > a,
-.pagination > .disabled > a:hover,
-.pagination > .disabled > a:focus {
-  color: #999;
-  cursor: not-allowed;
-  background-color: #fff;
-  border-color: #ddd;
-}
-</style>
 <script>
 // import * as config from './config'
 export default {

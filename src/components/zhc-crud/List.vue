@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <el-table class="m-table"
-              ref="multipleTable"
+  <div class="mainsrp-data">
+    <el-table ref="multipleTable"
               :data="pageSource.content"
               border
               stripe
@@ -113,8 +112,6 @@
                            @next-page="nextPage" />
   </div>
 </template>
-<style>
-</style>
 <script>
 import util from '@/libs/util.js'
 import * as config from './config'
