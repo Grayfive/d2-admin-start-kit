@@ -26,7 +26,6 @@
             前往
             <input type="text"
                    v-model.number="pageNumber"
-                   @input="change"
                    @change="change"
                    @keyup.enter="goto" />
             页
@@ -39,7 +38,7 @@
 <script>
 // import * as config from './config'
 export default {
-  name: 'Pagination',
+  name: 'Pagination2',
   data () {
     return {
       // pageSource: this.$utils.copy(config.pageSourceConfigBase)
@@ -110,53 +109,93 @@ export default {
     goto () {
       this.changeCurrentPage(this.pageNumber)
     },
-    prevPage: function () {
+    prevPage: async function () {
       if (!this.pageSource.first) {
-        const _query = this.$utils.copy(this.$route.query)
-        // _query['page'] = this.pageSource.number - 2
-        this.$router.push({ query: _query })
+        const _query = await this.$store.dispatch('d2admin/db/get', {
+          dbName: 'sys',
+          path: this.$route.path + '.query',
+          defaultValue: null,
+          user: true
+        }, { root: true })
+        _query.page = this.pageSource.number - 1
+        await this.$store.dispatch('d2admin/db/set', {
+          dbName: 'sys',
+          path: this.$route.path + '.query',
+          value: _query,
+          user: true
+        }, { root: true })
         this.$emit('prev-page')
       }
     },
-    nextPage: function () {
+    nextPage: async function () {
       if (!this.pageSource.last) {
-        const _query = this.$utils.copy(this.$route.query)
-        // _query['page'] = this.pageSource.number + 2
-        this.$router.push({ query: _query })
-        // this.emitPage(1)
+        const _query = await this.$store.dispatch('d2admin/db/get', {
+          dbName: 'sys',
+          path: this.$route.path + '.query',
+          defaultValue: null,
+          user: true
+        }, { root: true })
+        _query.page = this.pageSource.number + 1
+        await this.$store.dispatch('d2admin/db/set', {
+          dbName: 'sys',
+          path: this.$route.path + '.query',
+          value: _query,
+          user: true
+        }, { root: true })
         this.$emit('next-page')
       }
     },
-    changeCurrentPage: function (index) {
+    changeCurrentPage: async function (index) {
       if ((index - 1) !== this.pageSource.number) {
-        const _query = this.$utils.copy(this.$route.query)
-        // _query['page'] = index - 1
-        // _query['page'] = index
-        this.$router.push({ query: _query })
-        // this.emitPage(index - 1)emitPage
+        const _query = await this.$store.dispatch('d2admin/db/get', {
+          dbName: 'sys',
+          path: this.$route.path + '.query',
+          defaultValue: null,
+          user: true
+        }, { root: true })
+        _query.page = index
+        await this.$store.dispatch('d2admin/db/set', {
+          dbName: 'sys',
+          path: this.$route.path + '.query',
+          value: _query,
+          user: true
+        }, { root: true })
         this.emitPage(index)
       }
     },
     emitPage: function (page) {
       this.$emit('on-page', page)
     },
-    change (event) {
+    async change (event) {
       const val = event.target.value.trim()
       // 只能是正整数或空,可根据需求修改正则
       if (/^[1-9]\d*$|^$/.test(val)) {
-        if (this.pageSource.totalPages < val) {
+        const index = parseInt(Number(val))
+
+        if (this.pageSource.totalPages < index) {
           this.pageNumber = this.pageSource.totalPages
           event.target.value = this.pageNumber
         } else {
-          this.pageNumber = val
+          this.pageNumber = 1
+          event.target.value = this.pageNumber
         }
       } else {
         event.target.value = this.pageNumber
       }
-      const _query = this.$utils.copy(this.$route.query)
-      _query.page = this.pageNumber - 1
-      this.$router.push({ query: _query })
-      this.emitPage(this.pageNumber - 1)
+      const _query = await this.$store.dispatch('d2admin/db/get', {
+        dbName: 'sys',
+        path: this.$route.path + '.query',
+        defaultValue: null,
+        user: true
+      }, { root: true })
+      _query.page = this.pageNumber
+      await this.$store.dispatch('d2admin/db/set', {
+        dbName: 'sys',
+        path: this.$route.path + '.query',
+        value: _query,
+        user: true
+      }, { root: true })
+      this.emitPage(this.pageNumber)
     }
   },
   watch: {

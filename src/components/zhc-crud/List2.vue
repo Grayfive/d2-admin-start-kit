@@ -115,7 +115,7 @@
 <script>
 import util from '@/libs/util.js'
 import * as config from './config'
-import paginationComponents from './Pagination'
+import paginationComponents from './Pagination2'
 export default {
   name: 'List2',
   data () {
@@ -187,14 +187,14 @@ export default {
       val[0] && val[0](val[1])
     },
     prevPage: function () {
-      console.debug('setPage')
+      console.debug('prevPage')
       this.page = this.page - 1
       this.doSelect(-1, this.conf.pageSize, this.queryParams, {
         lastId: this.firstId
       })
     },
     nextPage: function () {
-      console.debug('setPage')
+      console.debug('nextPage')
       this.page = this.page + 1
       this.doSelect(1, this.conf.pageSize, this.queryParams, {
         lastId: this.lastId

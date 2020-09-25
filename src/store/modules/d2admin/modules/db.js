@@ -37,7 +37,11 @@ export default {
       defaultValue = '',
       user = false
     }) {
-      return dbGet({ dbName, path, defaultValue, user })
+      let _d = dbGet({ dbName, path, defaultValue, user })
+      if (!_d) {
+        _d = defaultValue
+      }
+      return _d
     },
     /**
      * @description 获取存储数据库对象

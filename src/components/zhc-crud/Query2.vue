@@ -191,7 +191,8 @@ export default {
   },
   created: function () {
     this.conf = config.queryConfig(this.config)
-    // this.initQueryString()
+    this.initQueryString()
+    this.initOtherQueries()
     // console.debug(this.$route)
     //  进行异步参数赋值
     this.conf.query.forEach((item) => {
@@ -294,9 +295,9 @@ export default {
       // console.debug(_url.join(''))
       return _url.join('')
     },
-    getUrlParams: function () {
+    getUrlParams: async function () {
       const _params = {}
-      // const _query = {}
+      const _query = {}
       //
       this.conf.query.forEach((item) => {
         if (item.value != null && item.value !== undefined) {
@@ -314,20 +315,25 @@ export default {
               _v = item.value * 100
             }
             _params[item.valName] = opt + _v
-            // _query[item.valName] = opt + _v
+            _query[item.valName] = opt + _v
             //
           }
         }
       })
       //
       // if (util.other.objectCount(_query) > 0) {
-      // this.$router.push({ query: _query })
+      await this.$store.dispatch('d2admin/db/set', {
+        dbName: 'sys',
+        path: this.$route.path + '.query',
+        value: _query,
+        user: true
+      }, { root: true })
       // }
       return _params
     },
-    getUrlParamsPage: function () {
+    getUrlParamsPage: async function () {
       const _params = {}
-      // const _query = {}
+      const _query = {}
       //
       this.conf.query.forEach((item) => {
         if (item.value != null && item.value !== undefined) {
@@ -345,26 +351,41 @@ export default {
               _v = item.value * 100
             }
             _params[item.valName] = opt + _v
-            // _query[item.valName] = opt + _v
+            _query[item.valName] = opt + _v
             //
           }
         }
       })
       // page
-      // if (this.$route.query.page) {
-      // _query.page = this.$route.query.page
-      // _params.page = this.$route.query.page
-      // }
-      //
+      const _q = await this.$store.dispatch('d2admin/db/get', {
+        dbName: 'sys',
+        path: this.$route.path + '.query',
+        defaultValue: {},
+        user: true
+      }, { root: true })
+      if (_q.page) {
+        _query.page = _q.page
+        _params.page = _q.page
+      }
       // if (util.other.objectCount(_query) > 0) {
-      // this.$router.push({ query: _query })
+      await this.$store.dispatch('d2admin/db/set', {
+        dbName: 'sys',
+        path: this.$route.path + '.query',
+        value: _query,
+        user: true
+      }, { root: true })
       // }
       return _params
     },
-    initQueryString: function () {
-      console.log(this.$route.query)
-      if (this.$route.query) {
-        const query = this.$route.query
+    initQueryString: async function () {
+      const query = await this.$store.dispatch('d2admin/db/get', {
+        dbName: 'sys',
+        path: this.$route.path + '.query',
+        defaultValue: null,
+        user: true
+      }, { root: true })
+      console.log(query)
+      if (query) {
         for (const k in query) {
           this.conf.query.forEach((q) => {
             if (q.valName === k) {
@@ -379,6 +400,20 @@ export default {
         }
       }
     },
+    initOtherQueries: async function () {
+      this.currentOtherQueries = await this.$store.dispatch('d2admin/db/get', {
+        dbName: 'sys',
+        path: this.$route.path + '.otherQueries',
+        defaultValue: '',
+        user: true
+      }, { root: true })
+      for (let i = this.count; i < this.conf.query.length; i++) {
+        const item = this.conf.query[i]
+        if (item.valName !== this.currentOtherQueries) {
+          item.value = ''
+        }
+      }
+    },
     onFold () {
       this.isFold = !this.isFold
     },
@@ -389,9 +424,15 @@ export default {
         }
       })
     },
-    changeOtherQueries (e) {
+    async changeOtherQueries (e) {
       console.log(e)
-      for (let i = (this.count - 1); i < this.conf.query.length; i++) {
+      this.$store.dispatch('d2admin/db/set', {
+        dbName: 'sys',
+        path: this.$route.path + '.otherQueries',
+        value: e,
+        user: true
+      }, { root: true })
+      for (let i = this.count; i < this.conf.query.length; i++) {
         const item = this.conf.query[i]
         item.value = ''
       }
