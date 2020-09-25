@@ -40,16 +40,26 @@
     .f-usn { -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; -o-user-select:none; user-select:none; }
 
     .mainsrp-breadcrumb { border-bottom:1px dashed #EEE; padding:16px 0; margin-bottom:16px; display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center;
-        .el-breadcrumb {  }
-        }
+        .el-breadcrumb {  } 
+    }
+
+    // .mainsrp-breadcrumb { border-bottom:1px dashed #EEE; padding:16px 0; margin-bottom:16px; display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center;
+        //.el-breadcrumb { min-width:0; flex:auto; overflow:hidden; display:flex; flex-wrap:nowrap;
+        //    &__item { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; height:20px; }
+        //}
+        //.m-output {
+            //min-width: 0;
+            //white-space:nowrap;
+        //}      
+    // }
 
     .mainsrp-sortbar { background-color:#F5F5F5; border-radius:4px; padding:8px; margin-bottom:16px; display:flex; justify-content:space-between;
-        .m-multi-query {
+        .m-multi-query { display:flex; justify-content:flex-start;
             span { margin-right:8px;
                 
             }
         }
-        .m-multi-search {
+        .m-multi-search { display:flex; justify-content:flex-end;
             > span { display:inline-block; margin-left:8px;
 
             }

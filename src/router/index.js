@@ -113,17 +113,19 @@ export const initUserRouter = async function () {
     const resources = info.resources
     const newRoutes = []
     resources.forEach((resource) => {
-      const r = {}
-      r.path = resource.path
-      r.name = resource.name
-      r.title = resource.title
-      r.meta = {
-        auth: true,
-        title: resource.title,
-        cache: resource.cache
+      if (resource.type == null || resource.type === undefined || resource.type === 1) {
+        const r = {}
+        r.path = resource.path
+        r.name = resource.name
+        r.title = resource.title
+        r.meta = {
+          auth: true,
+          title: resource.title,
+          cache: resource.cache
+        }
+        r.component = _import(resource.component)
+        newRoutes.push(r)
       }
-      r.component = _import(resource.component)
-      newRoutes.push(r)
     })
 
     if (newRoutes.length > 0) {

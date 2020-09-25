@@ -1,10 +1,11 @@
 <template>
   <d2-container>
-    <template slot="header">Page 1 header</template>
-    <query2 :config="queryConfig"
-            ref="query" />
-    <list :config="listConfig"
-          ref="list" />
+    <template slot="header">
+      <query2 :config="queryConfig"
+              ref="query" />
+    </template>
+    <list2 :config="listConfig"
+           ref="list" />
   </d2-container>
 </template>
 
@@ -38,7 +39,28 @@ export default {
         query: [
           {
             name: '编号',
-            valName: 'no',
+            valName: 'no1',
+            type: 'text',
+            value: '',
+            opt: 'LIKE'
+          },
+          {
+            name: '编号',
+            valName: 'no2',
+            type: 'text',
+            value: '',
+            opt: 'LIKE'
+          },
+          {
+            name: '编号',
+            valName: 'no3',
+            type: 'text',
+            value: '',
+            opt: 'LIKE'
+          },
+          {
+            name: '编号',
+            valName: 'no4',
             type: 'text',
             value: '',
             opt: 'LIKE'
@@ -66,6 +88,7 @@ export default {
         multiSelectValue: [],
         operation: [
           {
+            name: 'add',
             labelName: '详情', // 操作名称
             doFunc: (val) => {
               this.$router.push({ name: 'MaterialCategoryManagementEdit', params: { id: val._id } })

@@ -24,7 +24,15 @@ const apis = [
               path: '/page1',
               name: 'page1',
               component: 'demo/page1',
-              cache: false
+              cache: false,
+              type: 1
+            },
+            {
+              groupName: '页面',
+              groupId: 'page',
+              title: '添加',
+              name: 'add',
+              type: 2
             }
           ]
         }

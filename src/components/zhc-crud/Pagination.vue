@@ -112,27 +112,27 @@ export default {
     },
     prevPage: function () {
       if (!this.pageSource.first) {
-        const _query = this.$utils.copy(this.$route.query)
+        // const _query = this.$utils.copy(this.$route.query)
         // _query['page'] = this.pageSource.number - 2
-        this.$router.push({ query: _query })
+        // this.$router.push({ query: _query })
         this.$emit('prev-page')
       }
     },
     nextPage: function () {
       if (!this.pageSource.last) {
-        const _query = this.$utils.copy(this.$route.query)
+        // const _query = this.$utils.copy(this.$route.query)
         // _query['page'] = this.pageSource.number + 2
-        this.$router.push({ query: _query })
+        // this.$router.push({ query: _query })
         // this.emitPage(1)
         this.$emit('next-page')
       }
     },
     changeCurrentPage: function (index) {
       if ((index - 1) !== this.pageSource.number) {
-        const _query = this.$utils.copy(this.$route.query)
+        // const _query = this.$utils.copy(this.$route.query)
         // _query['page'] = index - 1
         // _query['page'] = index
-        this.$router.push({ query: _query })
+        // this.$router.push({ query: _query })
         // this.emitPage(index - 1)emitPage
         this.emitPage(index)
       }
@@ -153,9 +153,9 @@ export default {
       } else {
         event.target.value = this.pageNumber
       }
-      const _query = this.$utils.copy(this.$route.query)
-      _query.page = this.pageNumber - 1
-      this.$router.push({ query: _query })
+      // const _query = this.$utils.copy(this.$route.query)
+      // _query.page = this.pageNumber - 1
+      // this.$router.push({ query: _query })
       this.emitPage(this.pageNumber - 1)
     }
   },

@@ -1,62 +1,175 @@
 <template>
-  <div class="mainsrp-sortbar">
-    <div class="m-multi-query">
-      <span v-for="(item,index) in conf.query"
-            :key="'query'+index">
-        <el-input v-if="item.type === 'text'"
-                  type="text"
-                  v-model.trim="item.value"
-                  :placeholder="item.name"
-                  clearable></el-input>
-        <el-date-picker v-else-if="item.type === 'date'"
-                        format="yyyy/MM/dd"
-                        type="date"
-                        v-model="item.value"
-                        :placeholder="item.name"></el-date-picker>
-        <el-date-picker v-else-if="item.type === 'datetimerange'"
-                        format="yyyy/MM/dd HH:mm:ss"
-                        type="datetimerange"
-                        value-format="timestamp"
-                        v-model="item.value"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        :default-time="['00:00:00', '23:59:59']">
-        </el-date-picker>
-        <el-select v-else-if="item.type === 'select'"
-                   v-model="item.value"
-                   :placeholder="item.name">
-          <template v-for="o in item.selValue">
-            <el-option v-bind:key="o.text"
-                       :label="o.text"
-                       :value="o.value"></el-option>
+  <div>
+    <div class="mainsrp-sortbar">
+      <div class="m-multi-query">
+        <template v-for="(item,index) in conf.query">
+          <span v-if="index < count"
+                :key="'query'+index">
+            <el-input size="small"
+                      v-if="item.type === 'text'"
+                      type="text"
+                      v-model.trim="item.value"
+                      :placeholder="item.name"
+                      clearable></el-input>
+            <el-date-picker size="small"
+                            v-else-if="item.type === 'date'"
+                            format="yyyy/MM/dd"
+                            type="date"
+                            v-model="item.value"
+                            :placeholder="item.name"></el-date-picker>
+            <el-date-picker size="small"
+                            v-else-if="item.type === 'datetimerange'"
+                            format="yyyy/MM/dd HH:mm:ss"
+                            type="datetimerange"
+                            value-format="timestamp"
+                            v-model="item.value"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            :default-time="['00:00:00', '23:59:59']">
+            </el-date-picker>
+            <el-select size="small"
+                       v-else-if="item.type === 'select'"
+                       v-model="item.value"
+                       :placeholder="item.name">
+              <template v-for="o in item.selValue">
+                <el-option v-bind:key="o.text"
+                           :label="o.text"
+                           :value="o.value"></el-option>
+              </template>
+            </el-select>
+            <el-select size="small"
+                       v-else-if="item.type === 'select_filterable'"
+                       v-model="item.value"
+                       filterable
+                       :placeholder="item.name">
+              <template v-for="o in item.selValue">
+                <el-option v-bind:key="o.text"
+                           :label="o.text"
+                           :value="o.value"></el-option>
+              </template>
+            </el-select>
+            <el-input size="small"
+                      v-else-if="item.type === 'number' || item.type === 'amount'"
+                      v-model.number="item.value"
+                      clearable
+                      :placeholder="item.name"></el-input>
+            <component v-else-if="item.type === 'custom'"
+                       :is="item.component"
+                       :value="item.value"
+                       :conf="item"
+                       :placeholder="item.name"
+                       @on-change="editorChange"></component>
+          </span>
+        </template>
+      </div>
+      <div class="m-multi-search">
+        <span v-if="conf.query.length > count">
+          <el-select v-model="currentOtherQueries"
+                     placeholder="请选择"
+                     size="small"
+                     style="width:100px;"
+                     @change="changeOtherQueries">
+            <template v-for="(item,index) in conf.query">
+              <el-option v-if="index >= count"
+                         :key="'query'+index"
+                         :label="item.name"
+                         :value="item.valName">
+              </el-option>
+            </template>
+          </el-select>
+        </span>
+        <span>
+          <template v-for="(item,index) in conf.query">
+            <span v-if="index >= count"
+                  v-show="currentOtherQueries === item.valName"
+                  :key="'query'+index">
+              <el-input size="small"
+                        v-if="item.type === 'text'"
+                        type="text"
+                        v-model.trim="item.value"
+                        :placeholder="item.name"
+                        clearable></el-input>
+              <el-date-picker size="small"
+                              v-else-if="item.type === 'date'"
+                              format="yyyy/MM/dd"
+                              type="date"
+                              v-model="item.value"
+                              :placeholder="item.name"></el-date-picker>
+              <el-date-picker size="small"
+                              v-else-if="item.type === 'datetimerange'"
+                              format="yyyy/MM/dd HH:mm:ss"
+                              type="datetimerange"
+                              value-format="timestamp"
+                              v-model="item.value"
+                              start-placeholder="开始日期"
+                              end-placeholder="结束日期"
+                              :default-time="['00:00:00', '23:59:59']">
+              </el-date-picker>
+              <el-select size="small"
+                         v-else-if="item.type === 'select'"
+                         v-model="item.value"
+                         :placeholder="item.name">
+                <template v-for="o in item.selValue">
+                  <el-option v-bind:key="o.text"
+                             :label="o.text"
+                             :value="o.value"></el-option>
+                </template>
+              </el-select>
+              <el-select size="small"
+                         v-else-if="item.type === 'select_filterable'"
+                         v-model="item.value"
+                         filterable
+                         :placeholder="item.name">
+                <template v-for="o in item.selValue">
+                  <el-option v-bind:key="o.text"
+                             :label="o.text"
+                             :value="o.value"></el-option>
+                </template>
+              </el-select>
+              <el-input size="small"
+                        v-else-if="item.type === 'number' || item.type === 'amount'"
+                        v-model.number="item.value"
+                        clearable
+                        :placeholder="item.name"></el-input>
+              <component v-else-if="item.type === 'custom'"
+                         :is="item.component"
+                         :value="item.value"
+                         :conf="item"
+                         :placeholder="item.name"
+                         @on-change="editorChange"></component>
+            </span>
           </template>
-        </el-select>
-        <el-select v-else-if="item.type === 'select_filterable'"
-                   v-model="item.value"
-                   filterable
-                   :placeholder="item.name">
-          <template v-for="o in item.selValue">
-            <el-option v-bind:key="o.text"
-                       :label="o.text"
-                       :value="o.value"></el-option>
-          </template>
-        </el-select>
-        <el-input v-else-if="item.type === 'number' || item.type === 'amount'"
-                  v-model.number="item.value"
-                  clearable
-                  :placeholder="item.name"></el-input>
-        <component v-else-if="item.type === 'custom'"
-                   :is="item.component"
-                   :value="item.value"
-                   :conf="item"
-                   :placeholder="item.name"
-                   @on-change="editorChange"></component>
-      </span>
+        </span>
+        <!-- element 按钮 -->
+        <!-- <span>
+                    <el-button size="small" icon="el-icon-search" type="primary">搜索</el-button>
+                </span> -->
+        <span>
+          <button class="dy-button dy-button-small"
+                  @click="sel"><i class="el-icon-search"></i><span>搜索</span></button>
+        </span>
+      </div>
+    </div>
+    <div class="mainsrp-sortbar"
+         v-if="conf.globalOperation.length>1">
+      <div class="m-multi-search"
+           style="width:100%">
+        <template v-for="(item,index) in conf.globalOperation">
+          <span v-if="index>0"
+                :key="'btn'+index">
+            <el-button class="dy-button-small"
+                       :type="item.type?item.type:''"
+                       :icon="item.icon?item.icon:''"
+                       @click="item.doFunc(conf)"><span>{{item.labelName}}</span></el-button>
+          </span>
+        </template>
+
+      </div>
     </div>
   </div>
 </template>
 <script>
-import util from '@/libs/util.js'
+// import util from '@/libs/util.js'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
@@ -67,8 +180,10 @@ export default {
   name: 'Query2',
   data () {
     return {
+      count: 1,
       isFold: false,
-      conf: config.queryConfigBase
+      conf: config.queryConfigBase,
+      currentOtherQueries: ''// 当前其他查询
     }
   },
   props: {
@@ -76,12 +191,15 @@ export default {
   },
   created: function () {
     this.conf = config.queryConfig(this.config)
-    this.initQueryString()
+    // this.initQueryString()
     // console.debug(this.$route)
     //  进行异步参数赋值
     this.conf.query.forEach((item) => {
       item.asyncValue && item.asyncValue(item)
     })
+    // if (this.conf.query.length > 0) {
+    //   this.currentOtherQueries = this.conf.query[0].valName
+    // }
   },
   components: {
   },
@@ -178,7 +296,7 @@ export default {
     },
     getUrlParams: function () {
       const _params = {}
-      const _query = {}
+      // const _query = {}
       //
       this.conf.query.forEach((item) => {
         if (item.value != null && item.value !== undefined) {
@@ -196,20 +314,20 @@ export default {
               _v = item.value * 100
             }
             _params[item.valName] = opt + _v
-            _query[item.valName] = opt + _v
+            // _query[item.valName] = opt + _v
             //
           }
         }
       })
       //
-      if (util.other.objectCount(_query) > 0) {
-        this.$router.push({ query: _query })
-      }
+      // if (util.other.objectCount(_query) > 0) {
+      // this.$router.push({ query: _query })
+      // }
       return _params
     },
     getUrlParamsPage: function () {
       const _params = {}
-      const _query = {}
+      // const _query = {}
       //
       this.conf.query.forEach((item) => {
         if (item.value != null && item.value !== undefined) {
@@ -227,20 +345,20 @@ export default {
               _v = item.value * 100
             }
             _params[item.valName] = opt + _v
-            _query[item.valName] = opt + _v
+            // _query[item.valName] = opt + _v
             //
           }
         }
       })
       // page
-      if (this.$route.query.page) {
-        _query.page = this.$route.query.page
-        _params.page = this.$route.query.page
-      }
+      // if (this.$route.query.page) {
+      // _query.page = this.$route.query.page
+      // _params.page = this.$route.query.page
+      // }
       //
-      if (util.other.objectCount(_query) > 0) {
-        this.$router.push({ query: _query })
-      }
+      // if (util.other.objectCount(_query) > 0) {
+      // this.$router.push({ query: _query })
+      // }
       return _params
     },
     initQueryString: function () {
@@ -270,6 +388,18 @@ export default {
           q.value = val
         }
       })
+    },
+    changeOtherQueries (e) {
+      console.log(e)
+      for (let i = (this.count - 1); i < this.conf.query.length; i++) {
+        const item = this.conf.query[i]
+        item.value = ''
+      }
+    },
+    sel () {
+      if (this.conf.globalOperation && this.conf.globalOperation.length > 0) {
+        this.conf.globalOperation[0].doFunc()
+      }
     }
 
   }

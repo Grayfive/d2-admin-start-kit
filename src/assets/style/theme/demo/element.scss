@@ -28,7 +28,7 @@
     .el-divider--horizontal { margin:16px 0;  border-bottom:1px dashed #DCDFE6; }
 
     //按钮 { }
-    .dy-button { display:inline-block; line-height:1; white-space:normal; cursor:pointer; background-color:$color-dy-basic-1; color:#FFF; border:1px solid $color-dy-basic-1; text-align:center; box-sizing:border-box; outline:none; margin:0; transition:.1s; font-weight:500; padding:12px 20px; font-size:14px; border-radius:4px;
+    .dy-button { display:inline-block; white-space:nowrap !important; line-height:1; white-space:normal; cursor:pointer; background-color:$color-dy-basic-1; color:#FFF; border:1px solid $color-dy-basic-1; text-align:center; box-sizing:border-box; outline:none; margin:0; transition:.1s; font-weight:500; padding:12px 20px; font-size:14px; border-radius:4px;
         > i { margin-right:4px; }
     }
     .dy-button-sub-color { background-color:#FFBF3A; }
