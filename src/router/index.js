@@ -134,6 +134,8 @@ export const initUserRouter = async function () {
       store.commit('d2admin/page/init', frameInRoutes)
       router.addRoutes(frameInRoutes)
       const leftmenu = initLeftMenu(resources)
+      console.log('leftmenu')
+      console.log(leftmenu)
       store.commit('d2admin/menu/asideSet', [
         ...menuAside,
         ...leftmenu
@@ -157,7 +159,7 @@ function initLeftMenu (resources) {
     if (resource.menuGroupName && (resource.type == null || resource.type === undefined || resource.type === 1)) {
       let t = true
       for (let i = 0; i < leftMenu.length; i++) {
-        if (resource.groupName === leftMenu[i].groupName) {
+        if (resource.menuGroupName === leftMenu[i].title) {
           leftMenu[i].children.push(resource)
           t = false
           break
@@ -167,6 +169,7 @@ function initLeftMenu (resources) {
         const g = {
           title: resource.menuGroupName,
           icon: resource.menuGroupIcon,
+          path: resource.path,
           children: [
             resource
           ]

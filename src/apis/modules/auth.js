@@ -30,6 +30,17 @@ const apis = [
             {
               groupName: '页面',
               groupId: 'page',
+              icon: 'home',
+              title: 'page2',
+              path: '/page2',
+              name: 'page2',
+              component: 'demo/page2',
+              cache: false,
+              type: 1
+            },
+            {
+              groupName: '页面',
+              groupId: 'page',
               title: '添加',
               name: 'add',
               type: 2

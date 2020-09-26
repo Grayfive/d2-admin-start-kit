@@ -32,7 +32,7 @@ export default {
             labelName: '新增', // 操作名称
             type: 'primary',
             doFunc: () => {
-              this.$router.push({ name: 'MaterialCategoryManagementAdd' })
+              this.$router.push({ name: 'page2' })
             } // 操作方法
           }
         ],
@@ -91,7 +91,7 @@ export default {
             name: 'add',
             labelName: '详情', // 操作名称
             doFunc: (val) => {
-              this.$router.push({ name: 'MaterialCategoryManagementEdit', params: { id: val._id } })
+              this.$router.push({ name: 'page2', params: { id: val._id } })
             } // 操作方法
           }
         ],
@@ -149,7 +149,7 @@ export default {
   methods: {
   },
   mounted () {
-    this.$nextTick(function () {
+    this.$nextTick(() => {
       // DOM 现在更新了
       this.$refs.list.setQueryParamsOnRefresh(this.$refs.query.getUrlParamsPage())
     })

@@ -38,6 +38,7 @@
 </template>
 <script>
 // import * as config from './config'
+import util from '@/libs/util'
 export default {
   name: 'Pagination',
   data () {
@@ -112,7 +113,7 @@ export default {
     },
     prevPage: function () {
       if (!this.pageSource.first) {
-        const _query = this.$utils.copy(this.$route.query)
+        const _query = util.other.copy(this.$route.query)
         // _query['page'] = this.pageSource.number - 2
         this.$router.push({ query: _query })
         this.$emit('prev-page')
@@ -120,7 +121,7 @@ export default {
     },
     nextPage: function () {
       if (!this.pageSource.last) {
-        const _query = this.$utils.copy(this.$route.query)
+        const _query = util.other.copy(this.$route.query)
         // _query['page'] = this.pageSource.number + 2
         this.$router.push({ query: _query })
         // this.emitPage(1)
@@ -129,7 +130,7 @@ export default {
     },
     changeCurrentPage: function (index) {
       if ((index - 1) !== this.pageSource.number) {
-        const _query = this.$utils.copy(this.$route.query)
+        const _query = util.other.copy(this.$route.query)
         // _query['page'] = index - 1
         // _query['page'] = index
         this.$router.push({ query: _query })
@@ -153,7 +154,7 @@ export default {
       } else {
         event.target.value = this.pageNumber
       }
-      const _query = this.$utils.copy(this.$route.query)
+      const _query = util.other.copy(this.$route.query)
       _query.page = this.pageNumber - 1
       this.$router.push({ query: _query })
       this.emitPage(this.pageNumber - 1)

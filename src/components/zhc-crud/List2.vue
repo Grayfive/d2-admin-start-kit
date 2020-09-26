@@ -151,13 +151,16 @@ export default {
     const opts = []
     for (let i = 0; i < conf.operation.length; i++) {
       const opt = conf.operation[i]
-      for (let j = 0; j < resources.length; j++) {
-        const resource = resources[j]
-        // console.log(resource.type === 2)
-        if (resource.type === 2 && opt.name === resource.name) {
-          opts.push(opt)
-          break
+      if (opt.name) {
+        for (let j = 0; j < resources.length; j++) {
+          const resource = resources[j]
+          if (resource.type === 2 && opt.name === resource.name) {
+            opts.push(opt)
+            break
+          }
         }
+      } else {
+        opts.push(opt)
       }
     }
     conf.operation = opts
