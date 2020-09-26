@@ -153,7 +153,7 @@ export default {
       const opt = conf.operation[i]
       for (let j = 0; j < resources.length; j++) {
         const resource = resources[j]
-        console.log(resource.type === 2)
+        // console.log(resource.type === 2)
         if (resource.type === 2 && opt.name === resource.name) {
           opts.push(opt)
           break
