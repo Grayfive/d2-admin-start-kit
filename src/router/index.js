@@ -28,6 +28,7 @@ Vue.use(VueRouter)
 
 // 导出路由 在 main.js 里使用
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
@@ -112,6 +113,9 @@ export const initUserRouter = async function () {
     }, { root: true })
     const resources = info.resources
     const newRoutes = []
+    if (!info.resources) {
+      return false
+    }
     resources.forEach((resource) => {
       if (resource.type == null || resource.type === undefined || resource.type === 1) {
         const r = {}

@@ -226,9 +226,11 @@ export default {
             password: this.formLogin.password,
             loginFunc: this.$api.apis.auth.login
           })
-            .then(() => {
-              // 重定向对象不存在则返回顶层路径
-              this.$router.replace(this.$route.query.redirect || '/')
+            .then((d) => {
+              if (d) {
+                // 重定向对象不存在则返回顶层路径
+                this.$router.replace(this.$route.query.redirect || '/')
+              }
             })
         } else {
           // 登录表单校验失败
