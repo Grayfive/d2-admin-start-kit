@@ -180,7 +180,7 @@ export default {
   name: 'Query2',
   data () {
     return {
-      count: 1,
+      count: 3,
       isFold: false,
       conf: config.queryConfigBase,
       currentOtherQueries: ''// 当前其他查询
