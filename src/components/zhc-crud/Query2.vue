@@ -191,6 +191,10 @@ export default {
   },
   created: function () {
     this.conf = config.queryConfig(this.config)
+    if (this.conf.queryCount || this.conf.queryCount === 0) {
+      this.count = this.conf.queryCount
+    }
+
     this.initQueryString()
     this.initOtherQueries()
     // console.debug(this.$route)
