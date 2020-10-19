@@ -189,12 +189,36 @@ export default {
   props: {
     config: Object
   },
-  created: function () {
+  created: async function () {
     this.conf = config.queryConfig(this.config)
     if (this.conf.queryCount || this.conf.queryCount === 0) {
       this.count = this.conf.queryCount
     }
-
+    const info = await this.$store.dispatch('d2admin/db/get', {
+      dbName: 'sys',
+      path: 'user.info',
+      defaultValue: {
+        resources: []
+      },
+      user: true
+    }, { root: true })
+    const resources = info.resources
+    const opts = []
+    for (let i = 0; i < this.conf.globalOperation.length; i++) {
+      const opt = this.conf.globalOperation[i]
+      if (opt.name) {
+        for (let j = 0; j < resources.length; j++) {
+          const resource = resources[j]
+          if ((resource.type === 2 || !resource.menuGroupName) && opt.name === resource.name) {
+            opts.push(opt)
+            break
+          }
+        }
+      } else {
+        opts.push(opt)
+      }
+    }
+    this.conf.globalOperation = opts
     this.initQueryString()
     this.initOtherQueries()
     // console.debug(this.$route)
