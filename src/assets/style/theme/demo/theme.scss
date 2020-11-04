@@ -20,7 +20,8 @@
 
   // 背景图片和遮罩
   .d2-layout-header-aside-group {
-    background-color: $theme-bg-color;
+    //grayfive 清空主背景
+    //background-color: $theme-bg-color;
     .d2-layout-header-aside-mask {
       background: $theme-bg-mask;
     }
@@ -71,8 +72,14 @@
   
   // 顶栏
   .d2-theme-header {
+    //grayfive 修改 logo
+    .logo-group {
+        background-color: $theme-bg-color;
+        border-radius:0 6px 0 0;
+    }
     // 顶栏菜单空间不足时显示的滚动控件
     .d2-theme-header-menu {
+
       .d2-theme-header-menu__prev, .d2-theme-header-menu__next {
         color: $theme-header-item-color;
         background: $theme-header-item-background-color;
@@ -167,6 +174,9 @@
   .d2-theme-container {
     // 侧边栏
     .d2-theme-container-aside {
+        //grayfive 增加边栏背景及圆角
+        background-color: $theme-bg-color;
+        border-radius:0 0 6px 0;
       // 菜单为空的时候显示的信息
       .d2-layout-header-aside-menu-empty {
         background: $theme-aside-menu-empty-background-color;
