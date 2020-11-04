@@ -153,4 +153,55 @@
         margin-left: 10px;
         vertical-align: bottom;
       }
-}
+    }
+    .p-login { height:100%;
+        .pl_ct {
+            .pl_ct_hd {
+                h3 { font-size:24px; font-weight:500;
+                    em { font-size:16px; font-style:normal; margin-left:8px; font-weight:normal; }
+                }
+            }
+        }
+
+        .pl_sd { background:$color-dy-primary; padding:3%; height:100%; display:table;
+            .pl_sd_ct { display:table-cell; vertical-align:middle; color:#FFF;
+                .pl_sd_logo { text-align:center; font-size:0;
+                    img { width:240px; height:80px; vertical-align:middle; }
+                }
+                .pl_sd_tit { margin-top:32px;
+                    em { display:block; font-size:24px; line-height:32px; font-style:normal;
+                    
+                    }
+                    h3 { font-size:32px; line-height:40px; margin-top:4px; margin-bottom:0; font-weight:400; }               
+                }
+                .pl_sd_form { margin-top:12px;
+                    .item { display:flex; padding:8px 0;
+                        .item_hd { margin-right:12px; padding:8px 0;
+                            label { width:64px; text-align:right; display:block; padding:3px 0 5px; line-height:32px; font-size:16px; }
+                        }
+                        .item_bd { flex:1; position:relative; padding:8px 0;
+                            input { padding:4px; line-height:32px; font-size:16px; width:100%; background:transparent; border:0; color:#FFF; outline:none;
+                                &::-webkit-input-placeholder { color:rgba(255,255,255,0.5); }
+                                &:-webkit-autofill { -webkit-box-shadow:0 0 0px 32px $color-dy-primary inset; -webkit-text-fill-color:#FFF; -webkit-font-size:16px; }
+                            }
+                            ::after { position:absolute; content:''; left:0; bottom:0; right:0; height:1px; background:#FFF; opacity:0.2; }
+                            :focus { border:0; font-size:16px; } 
+                        }
+                        .item_ft { margin-left:12px; padding:8px 0;
+                            a { display:block; font-size:0; height:40px;
+                                img { height:40px; }
+                            }
+                        }
+                    }
+                }
+                .pl_sd_btn { padding:0 64px; text-align:center; margin-top:24px;
+                    .dy-custem { display:block; background:#6E40CC; border-color:#6E40CC; border-radius:20px; }
+                }
+                .pl_sd_pw { margin-top:16px; font-size:12px; text-align:right;
+                    .forget_password { color:#FFF; }
+                }
+            }
+        }
+    }
+
+    ..d2-layout-header-aside-group .d2-layout-header-aside-content .d2-theme-header .logo-group 
